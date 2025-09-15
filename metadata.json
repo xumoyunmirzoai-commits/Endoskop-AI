@@ -1,0 +1,5 @@
+{
+  "name": "Endo-AI-Vision: Endoscopy Image Analysis",
+  "description": "An AI-powered web application for the analysis of endoscopic and colonoscopic images. This tool assists medical professionals by identifying and highlighting potential pathologies such as polyps, inflammation, and lesions, providing a detailed report with confidence scores. This is a decision support tool and not a substitute for professional medical diagnosis.",
+  "requestFramePermissions": []
+}
