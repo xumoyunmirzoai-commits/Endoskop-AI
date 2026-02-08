@@ -2,7 +2,7 @@ export const translations = {
   en: {
     header: {
       title: 'Endo-AI Assistant',
-      subtitle: 'AI-Powered Decision Support for Endoscopy',
+      subtitle: 'AI-Powered Decision Support for Colonoscopy',
     },
     navigation: {
       home: 'Home',
@@ -52,6 +52,7 @@ export const translations = {
       exitFullscreen: 'Exit Fullscreen',
       patientDetails: 'Patient Details',
       summary: 'Observational Summary',
+      impression: 'Non-Diagnostic Impression',
       findings: 'Detailed Findings',
       table: {
         name: 'Finding',
@@ -59,6 +60,8 @@ export const translations = {
         location: 'Location',
         description: 'Description',
       },
+      analyzedImage: 'Analyzed Image',
+      impressionUnavailable: 'No impression was provided.',
       noFindings: 'No specific pathological findings were identified.',
     },
     disclaimer: {
@@ -101,7 +104,7 @@ export const translations = {
   ru: {
     header: {
       title: 'Endo-AI Ассистент',
-      subtitle: 'Поддержка принятия решений в эндоскопии с помощью ИИ',
+      subtitle: 'ИИ-поддержка принятия решений при колоноскопии',
     },
     navigation: {
       home: 'Главная',
@@ -151,6 +154,7 @@ export const translations = {
       exitFullscreen: 'Выйти из полного экрана',
       patientDetails: 'Данные пациента',
       summary: 'Наблюдательное резюме',
+      impression: 'Недефинитивное диагностическое впечатление',
       findings: 'Подробные результаты',
       table: {
         name: 'Результат',
@@ -158,6 +162,8 @@ export const translations = {
         location: 'Местоположение',
         description: 'Описание',
       },
+      analyzedImage: 'Проанализированное изображение',
+      impressionUnavailable: 'Интерпретация не указана.',
       noFindings: 'Патологических изменений не выявлено.',
     },
     disclaimer: {
@@ -200,7 +206,7 @@ export const translations = {
   uz: {
     header: {
       title: 'Endo-AI Yordamchi',
-      subtitle: 'Endoskopiya uchun sun\'iy intellektga asoslangan qarorlarni qo\'llab-quvvatlash',
+      subtitle: 'Kolonoskopiya uchun sun\'iy intellektga asoslangan qarorlarni qo\'llab-quvvatlash',
     },
     navigation: {
       home: 'Bosh sahifa',
@@ -250,6 +256,7 @@ export const translations = {
       exitFullscreen: 'To\'liq ekrandan chiqish',
       patientDetails: 'Bemor haqida ma\'lumot',
       summary: 'Kuzatuv xulosasi',
+      impression: 'No-diagnostik taassurot',
       findings: 'Batafsil topilmalar',
       table: {
         name: 'Topilma',
@@ -257,6 +264,8 @@ export const translations = {
         location: 'Joylashuvi',
         description: 'Tavsif',
       },
+      analyzedImage: 'Tahlil qilingan rasm',
+      impressionUnavailable: 'Taassurot keltirilmagan.',
       noFindings: 'Maxsus patologik topilmalar aniqlanmadi.',
     },
     disclaimer: {

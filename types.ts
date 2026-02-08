@@ -15,6 +15,7 @@ export interface Finding {
 
 export interface AnalysisResult {
   summary: string;
+  impression: string;
   findings: Finding[];
 }
 

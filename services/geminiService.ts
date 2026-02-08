@@ -15,6 +15,10 @@ const analysisSchema = {
             type: Type.STRING,
             description: "A one or two sentence observational summary of the image, considering the patient's age and gender. Describe only what is visually present."
         },
+        impression: {
+            type: Type.STRING,
+            description: "A brief, non-diagnostic impression describing likely interpretations of the visual findings. Must avoid definitive diagnosis language."
+        },
         findings: {
             type: Type.ARRAY,
             description: "An array of potential pathological findings or observations.",
@@ -43,21 +47,22 @@ const analysisSchema = {
             }
         }
     },
-    required: ["summary", "findings"]
+    required: ["summary", "impression", "findings"]
 };
 
 
 export const analyzeImage = async (base64ImageData: string, mimeType: string, patientData: PatientData): Promise<AnalysisResult> => {
     
     const fullPrompt = `
-You are an expert clinical documentation AI assistant specializing in gastroenterology and the analysis of endoscopic and colonoscopic imagery. Your role is to serve as a decision support tool for qualified medical professionals by providing descriptive analysis of images.
+You are an expert clinical documentation AI assistant specializing in gastroenterology and the analysis of colonoscopic imagery. Your role is to serve as a decision support tool for qualified medical professionals by providing descriptive analysis of images.
 
 **Primary Instructions:**
 1.  **Analyze the Image:** Carefully examine the provided medical image.
 2.  **Identify Features:** Identify any potential pathologies, abnormalities, or notable features. This includes, but is not limited to, polyps, inflammation, ulcers, lesions, bleeding, or normal features.
 3.  **Consider Patient Context:** Use the patient context provided below in your analysis, as the prevalence of certain conditions can be correlated with age and gender.
 4.  **Report Findings:** For each distinct finding, provide a detailed analysis. If the image appears normal, report that with 'Normal' confidence.
-5.  **Strict JSON Output:** Structure your response strictly according to the provided JSON schema.
+5.  **Provide a Non-Diagnostic Impression:** Summarize likely interpretations of the visual evidence without making a definitive diagnosis.
+6.  **Strict JSON Output:** Structure your response strictly according to the provided JSON schema.
 
 **Patient Context:**
 *   **Patient ID:** ${patientData.patientId}
@@ -67,7 +72,7 @@ You are an expert clinical documentation AI assistant specializing in gastroente
 
 **Crucial Constraints:**
 *   **DO NOT** invent findings if the image is clear or ambiguous.
-*   **DO NOT** provide a diagnosis. Your role is descriptive analysis of visual data only.
+*   **DO NOT** provide a definitive diagnosis. Your role is descriptive analysis with non-diagnostic impressions only.
 *   **DO NOT** suggest treatments or further actions.
 *   Your output must be only the JSON object, with no other text or explanations.
 `;
@@ -99,6 +104,9 @@ You are an expert clinical documentation AI assistant specializing in gastroente
         if (!Array.isArray(parsedResult.findings)) {
             parsedResult.findings = [];
         }
+        if (typeof parsedResult.impression !== 'string') {
+            parsedResult.impression = '';
+        }
 
         return parsedResult;
 
@@ -119,6 +127,7 @@ export const translateAnalysisResult = async (analysis: AnalysisResult, targetLo
 
     const systemInstruction = `You are a highly skilled medical translator. Your task is to translate the text fields within a given JSON object to a specified target language.
 - Translate the 'summary' field.
+- Translate the 'impression' field.
 - In each object within the 'findings' array, translate the 'name', 'description', and 'location' fields.
 - **Crucially, DO NOT translate the 'confidence' field.** Its value must be preserved exactly as it is in the original object.
 - Your output MUST be a valid JSON object that strictly adheres to the provided schema.`;
@@ -144,6 +153,9 @@ ${JSON.stringify(analysis, null, 2)}`;
 
         if (!Array.isArray(parsedResult.findings)) {
             parsedResult.findings = [];
+        }
+        if (typeof parsedResult.impression !== 'string') {
+            parsedResult.impression = analysis.impression || '';
         }
         
         // As a safeguard, ensure confidence levels from the original are maintained
