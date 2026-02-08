@@ -74,6 +74,20 @@ export const AnalysisReport: React.FC<AnalysisReportProps> = ({ analysis, patien
             </div>
 
             <div className="space-y-2">
+                <h3 className="text-lg font-semibold text-slate-700">{t('report.impression')}</h3>
+                {isTranslating ? (
+                    <div className="space-y-2">
+                        <TranslatingPlaceholder />
+                        <TranslatingPlaceholder className="w-2/3"/>
+                    </div>
+                ) : analysis.impression ? (
+                    <p className="text-slate-600">{analysis.impression}</p>
+                ) : (
+                    <p className="text-slate-500 italic">{t('report.impressionUnavailable')}</p>
+                )}
+            </div>
+
+            <div className="space-y-2">
                 <h3 className="text-lg font-semibold text-slate-700">{t('report.findings')}</h3>
                 {analysis.findings && analysis.findings.length > 0 ? (
                     <div className="overflow-x-auto">

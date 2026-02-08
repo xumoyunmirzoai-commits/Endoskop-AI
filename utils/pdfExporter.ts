@@ -82,6 +82,16 @@ export const exportAnalysisToPdf = async (item: HistoryItem, t: (key: string) =>
     doc.text(summaryLines, pageMargin, cursorY);
     cursorY += (summaryLines.length * 4) + 8; // Estimate new Y position
 
+    // --- Non-Diagnostic Impression ---
+    doc.setFontSize(12);
+    doc.text(t('report.impression'), pageMargin, cursorY);
+    cursorY += 6;
+    doc.setFontSize(10);
+    const impressionText = analysisResult.impression || t('report.impressionUnavailable');
+    const impressionLines = doc.splitTextToSize(impressionText, contentWidth);
+    doc.text(impressionLines, pageMargin, cursorY);
+    cursorY += (impressionLines.length * 4) + 8;
+
     // --- Detailed Findings ---
     if (cursorY > 260) {
         doc.addPage();
